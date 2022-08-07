@@ -1,7 +1,7 @@
 ﻿<link rel="stylesheet" type="text/css" href="~/lib/semantic/semantic.min.css">
 <link rel="stylesheet" type="text/css" href="~/css/card-js-and-cicleloader.min.css">
 
-<style type="text/css">
+@*<style type="text/css">
     table tbody tr td { border-top: solid 1px #CCCCCC; border-right: solid 1px #CCCCCC; width: 80px; }
     table { border-collapse: initial; }
     .expiry-container .expiry-wrapper select { width: 50%; }
@@ -9,7 +9,7 @@
     .recurring { padding: 15px 0; font-size: 15px; }
         .recurring label { font-weight: bold; padding-left: 10px; }
     .ui.form .recurring input[type=checkbox], .ui.form textarea { vertical-align: unset !important; }
-</style>
+</style>*@
 
 @if (!String.IsNullOrEmpty(ViewBag.ResultMessage))
 {
@@ -17,65 +17,65 @@
 }
 
 
-    <div class="container">
+<div class="container">
 
     <form asp-controller="Checkout" asp-action="Index" id="payment-form" name="form">
-       <br />
-            <input type="hidden" name="Is3D" />
-                  <h4 style="color: black;" >Sipariş Bilgileri</h4>
-              <div class="flexbox">
+        <br />
+        <input type="hidden" name="Is3D" />
+        <h4 style="color: black;">Sipariş Bilgileri</h4>
+        <div class="flexbox">
 
-        <div class="inputBox">
-            <span>Miktar</span>
-            <input type="text" class="amount-input" name="Amount">
-        </div>
             <div class="inputBox">
-            <span>Sipariş No</span>
-            <input type="text" class="siparis-no-input" name="OrderId">
-        </div>    </div>
-      <br />
-<hr class="solid">
-      <br />
-
-          <div class="card-container">
-
-        <div class="front">
-            <div class="image">
-                <img src="image/chip.png" alt="">
-               <div> <img src="image/visa.png" alt="">
-                <img src="image/mastercard.png" alt=""></div>
+                <span>Miktar</span>
+                <input type="text" class="amount-input" name="Amount">
             </div>
-            <div class="card-number-box">################</div>
-            <div class="flexbox">
-                <div class="box">
-                    <span>Kart sahibinin adı</span>
-                    <div class="card-holder-name">ad soyad</div>
+            <div class="inputBox">
+                <span>Sipariş No</span>
+                <input type="text" class="siparis-no-input" name="OrderId">
+            </div>
+        </div>
+        <br />
+        <hr class="solid">
+        <br />
+
+        <div class="card-container">
+            <div class="front">
+                <div class="image">
+                    <img src="image/chip.png" alt="">
+                    <div>
+                        <img src="image/visa.png" alt="">
+                        <img src="image/mastercard.png" alt="">
+                    </div>
                 </div>
-                <div class="box">
-                    <span>expires</span>
-                    <div class="expiration">
-                        <span class="exp-month">mm</span>
-                        <span class="exp-year">yy</span>
+                <div class="card-number-box">################</div>
+                <div class="flexbox">
+                    <div class="box">
+                        <span>Kart sahibinin adı</span>
+                        <div class="card-holder-name">ad soyad</div>
+                    </div>
+                    <div class="box">
+                        <span>expires</span>
+                        <div class="expiration">
+                            <span class="exp-month">mm</span>
+                            <span class="exp-year">yy</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="back">
-
-            <div class="stripe"></div>
-            <div class="box">
-                <span>cvv</span>
-                <div class="cvv-box"></div>
-                <img src="image/visa.png" alt="">
-                <img src="image/mastercard.png" alt="">
+            <div class="back">
+                <div class="stripe"></div>
+                <div class="box">
+                    <span>cvv</span>
+                    <div class="cvv-box"></div>
+                    <img src="image/visa.png" alt="">
+                    <img src="image/mastercard.png" alt="">
+                </div>
             </div>
         </div>
 
-    </div>
-
-          <br />
-                    <br />
+        <br />
+        <br />
 
 
         <div class="inputBox">
@@ -85,13 +85,13 @@
 
         <div class="inputBox">
             <span>kart sahibinin adı</span>
-            <input type="text" class="card-holder-input" maxlength="27"  id="the-card-name-id" name="CardholderName">
+            <input type="text" class="card-holder-input" maxlength="27" id="the-card-name-id" name="CardholderName">
         </div>
 
         <div class="flexbox">
             <div class="inputBox">
                 <span>AY</span>
-                <select  name="ExpireMonth" id="" class="month-input">
+                <select name="ExpireMonth" id="" class="month-input">
                     <option value="month" selected disabled>AY</option>
                     <option value="01">01</option>
                     <option value="02">02</option>
@@ -110,7 +110,7 @@
 
             <div class="inputBox">
                 <span>YIL</span>
-                <select name="ExpireYear"  id="" class="year-input">
+                <select name="ExpireYear" id="" class="year-input">
                     <option value="year" selected disabled>YIL</option>
                     <option value="22">22</option>
                     <option value="23">23</option>
@@ -130,72 +130,68 @@
 
             <div class="inputBox">
                 <span>güvenlik kodu (cvv)</span>
-                <input name="CardCode"  type="text" maxlength="3" class="cvv-input">
+                <input name="CardCode" type="text" maxlength="3" class="cvv-input">
             </div>
+
         </div>
 
-
-         <br />
-         <hr class="solid">
-
+        <br />
+        <hr class="solid">
         <br />
 
 
         <h4><a href="javascript:return false;" style="color: black" class="tab" id="installment-link">Taksit Seçenekleri</a></h4>
         <br />
 
-    <div id="installmentTable" class="installmentTable" >
-        <table cellpadding="0" cellspacing="0" style="border: solid 1px #CCCCCC; width:100%">
-            <thead>
-                <tr>
-                    <td align="center" style="border-top: solid 1px #CCCCCC;border-right: solid 1px #CCCCCC; width:50%;height:28px; ">
-                        <span style="padding:3px;font-weight: bold;color: black; ">Taksit Sayısı</span>
-                    </td>
+        <div id="installmentTable" class="installmentTable">
+            <table cellpadding="0" cellspacing="0" style="border: solid 1px #CCCCCC; width:100%">
+                <thead>
+                    <tr>
+                        <td align="center" style="border-top: solid 1px #CCCCCC;border-right: solid 1px #CCCCCC; width:50%;height:28px; ">
+                            <span style="padding:3px;font-weight: bold;color: black; ">Taksit Sayısı</span>
+                        </td>
 
-                    <td align="center" style="border-top: solid 1px #CCCCCC;  height:28px;  width:50%">
-                        <span style="padding:3px;font-weight: bold;color: black;">Toplam</span>
-                    </td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                </tr>
-            </tbody>
-        </table>
+                        <td align="center" style="border-top: solid 1px #CCCCCC;  height:28px;  width:50%">
+                            <span style="padding:3px;font-weight: bold;color: black;">Toplam</span>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    </tr>
+                </tbody>
+            </table>
 
-       
-
-        <input type="hidden" name="SelectedPosData" />
-    </div>
-    <br />
-
-
+            <input type="hidden" name="SelectedPosData" />
+        </div>
+        <br />
 
         <input type="submit" value="ödemeyi tamamla" class="submit-btn" name="paymentButton">
+
     </form>
 
-</div>    
-    
+</div>
+
 
 
 @section Scripts {
 
-<script src="~/lib/semantic/semantic.min.js"></script>
-<script src="~/js/card-js.min.js"></script>
+    <script src="~/lib/semantic/semantic.min.js"></script>
+    <script src="~/js/card-js.min.js"></script>
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
         var posDatas = [];
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             sixDigitLastValue = 0;
             previousRecurring = false;
 
-            $("#CardNumber").on("propertychange change keyup paste input", function () {
+            $("#CardNumber").on("propertychange change keyup paste input", function() {
                 checkBinCode();
             });
 
-            $('#recurringPayment').click(function () {
+            $('#recurringPayment').click(function() {
                 if ($(this).is(':checked')) {
                     $("#recurringArea").show();
                 } else {
@@ -205,7 +201,7 @@
                 checkBinCode();
             });
 
-            $('#payment-form').submit(function (e) {
+            $('#payment-form').submit(function(e) {
                 if ($("input[name='Installment']:checked").length > 0) {
                     var radioValue = $("input[name='Installment']:checked").val();
                     if (!radioValue) {
@@ -250,11 +246,11 @@
                                 "amount": amount,
                                 "isRecurring": isRecurring
                             },
-                            success: function (res) {
+                            success: function(res) {
                                 fillInstalmentTable(res.posResponse.data);
                                 $("input[name='Is3D']").val(res.is_3d);
                             },
-                            error: function (xhr, ajaxOptions, thrownError) {
+                            error: function(xhr, ajaxOptions, thrownError) {
 
                             }
                         });
@@ -267,9 +263,9 @@
                 $("table tbody tr").remove();
                 posDatas.forEach(l => {
                     var markup = `<tr data-id='${l.installments_number}'>
-                                            <td align="center"> <input type="radio" name="Installment" value="${l.installments_number}"/>${l.installments_number}</td>
-                                            <td align="center">${l.amount_to_be_paid}</td>
-                                          </tr>`;
+                                                    <td align="center"> <input type="radio" name="Installment" value="${l.installments_number}"/>${l.installments_number}</td>
+                                                    <td align="center">${l.amount_to_be_paid}</td>
+                                                  </tr>`;
                     $("table tbody").append(markup)
                 });
 
@@ -277,45 +273,45 @@
 
             }
         });
-</script>
+    </script>
 
 }
 
 
 
 
-<script>
+    <script>
 
-document.querySelector('.card-number-input').oninput = () =>{
-    document.querySelector('.card-number-box').innerText = document.querySelector('.card-number-input').value;
-}
+        document.querySelector('.card-number-input').oninput = () => {
+            document.querySelector('.card-number-box').innerText = document.querySelector('.card-number-input').value;
+        }
 
-document.querySelector('.card-holder-input').oninput = () =>{
-    document.querySelector('.card-holder-name').innerText = document.querySelector('.card-holder-input').value;
-}
+        document.querySelector('.card-holder-input').oninput = () => {
+            document.querySelector('.card-holder-name').innerText = document.querySelector('.card-holder-input').value;
+        }
 
-document.querySelector('.month-input').oninput = () =>{
-    document.querySelector('.exp-month').innerText = document.querySelector('.month-input').value;
-}
+        document.querySelector('.month-input').oninput = () => {
+            document.querySelector('.exp-month').innerText = document.querySelector('.month-input').value;
+        }
 
-document.querySelector('.year-input').oninput = () =>{
-    document.querySelector('.exp-year').innerText = document.querySelector('.year-input').value;
-}
+        document.querySelector('.year-input').oninput = () => {
+            document.querySelector('.exp-year').innerText = document.querySelector('.year-input').value;
+        }
 
-document.querySelector('.cvv-input').onmouseenter = () =>{
-    document.querySelector('.front').style.transform = 'perspective(1000px) rotateY(-180deg)';
-    document.querySelector('.back').style.transform = 'perspective(1000px) rotateY(0deg)';
-}
+        document.querySelector('.cvv-input').onmouseenter = () => {
+            document.querySelector('.front').style.transform = 'perspective(1000px) rotateY(-180deg)';
+            document.querySelector('.back').style.transform = 'perspective(1000px) rotateY(0deg)';
+        }
 
-document.querySelector('.cvv-input').onmouseleave = () =>{
-    document.querySelector('.front').style.transform = 'perspective(1000px) rotateY(0deg)';
-    document.querySelector('.back').style.transform = 'perspective(1000px) rotateY(180deg)';
-}
+        document.querySelector('.cvv-input').onmouseleave = () => {
+            document.querySelector('.front').style.transform = 'perspective(1000px) rotateY(0deg)';
+            document.querySelector('.back').style.transform = 'perspective(1000px) rotateY(180deg)';
+        }
 
-document.querySelector('.cvv-input').oninput = () =>{
-    document.querySelector('.cvv-box').innerText = document.querySelector('.cvv-input').value;
-}
+        document.querySelector('.cvv-input').oninput = () => {
+            document.querySelector('.cvv-box').innerText = document.querySelector('.cvv-input').value;
+        }
 
-</script>
+    </script>
 
 
