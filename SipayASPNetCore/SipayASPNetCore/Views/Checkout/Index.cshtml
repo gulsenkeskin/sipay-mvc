@@ -1,4 +1,5 @@
-﻿
+﻿<link rel="stylesheet" type="text/css" href="~/lib/semantic/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="~/css/card-js-and-cicleloader.min.css">
 
 <style type="text/css">
     table tbody tr td { border-top: solid 1px #CCCCCC; border-right: solid 1px #CCCCCC; width: 80px; }
@@ -16,10 +17,11 @@
 }
 
 
+
+
+
 <div class="container">
 
-    <br />
-    <br />
     <div class="card-container">
 
         <div class="front">
@@ -30,7 +32,7 @@
             <div class="card-number-box">################</div>
             <div class="flexbox">
                 <div class="box">
-                    <span>card holder</span>
+                    <span>Kart sahibinin adı</span>
                     <div class="card-holder-name">full name</div>
                 </div>
                 <div class="box">
@@ -53,40 +55,27 @@
         </div>
 
     </div>
-    
 
-    <form asp-controller="Checkout" asp-action="Index" id="payment-form" name="form">
+    <form form asp-controller="Checkout" asp-action="Index" id="payment-form" name="form">
 
-        
-      @*   <h4 class="ui horizontal divider header">
-        <span style="text-decoration: underline; color: black" class="tab">Ödeme Bilgileri</span>
-    </h4>*@
-    
+            <input type="hidden" name="Is3D" />
+
+
         <div class="inputBox">
-            <span>Kart Numarası</span>
-            <input type="text" maxlength="16" class="card-number my-custom-class" name="card-number" id="CardNumber">
+            <span>kart numarası</span>
+            <input type="text" maxlength="16" class="card-number-input" name="card-number" id="CardNumber">
         </div>
-        <div class="inputBox">
-            <span>Kart Sahibinin Adı</span>
-            <input type="text" class="name"  id="the-card-name-id" name="CardholderName" required>
-               </div>
 
+        <div class="inputBox">
+            <span>kart sahibinin adı</span>
+            <input type="text" class="card-holder-input" maxlength="27"  id="the-card-name-id" name="CardholderName">
+        </div>
 
         <div class="flexbox">
-
-             <div class="inputBox">
-            <span>Expiration MM</span>
-            <input type="text"  class="expiry-month"  name="ExpireMonth" required>
-        </div>
-
-         <div class="inputBox">
-            <span>Expiration YY</span>
-            <input type="text"  class="expiry-year" name="ExpireYear" required>
-        </div>
-        @*    <div class="inputBox">
-                <span>expiration mm</span>
-                <select name="" id="" class="month-input">
-                    <option value="month" selected disabled>month</option>
+            <div class="inputBox">
+                <span>AY</span>
+                <select  name="ExpireMonth" id="" class="month-input">
+                    <option value="month" selected disabled>AY</option>
                     <option value="01">01</option>
                     <option value="02">02</option>
                     <option value="03">03</option>
@@ -101,41 +90,51 @@
                     <option value="12">12</option>
                 </select>
             </div>
+
             <div class="inputBox">
-                <span>expiration yy</span>
-                <select name="" id="" class="year-input">
-                    <option value="year" selected disabled>year</option>
-                    <option value="2021">2021</option>
-                    <option value="2022">2022</option>
-                    <option value="2023">2023</option>
-                    <option value="2024">2024</option>
-                    <option value="2025">2025</option>
-                    <option value="2026">2026</option>
-                    <option value="2027">2027</option>
-                    <option value="2028">2028</option>
-                    <option value="2029">2029</option>
-                    <option value="2030">2030</option>
+                <span>YIL</span>
+                <select name="ExpireYear"  id="" class="year-input">
+                    <option value="year" selected disabled>YIL</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                    <option value="32">32</option>
+                    <option value="33">33</option>
+                    <option value="34">34</option>
                 </select>
-            </div>*@
+            </div>
+
             <div class="inputBox">
-                <span>cvv</span>
-                <input type="text" maxlength="3" class="cvc" name="CardCode" required>
+                <span>güvenlik kodu (cvv)</span>
+                <input name="CardCode"  type="text" maxlength="3" class="cvv-input">
             </div>
         </div>
-        <br />
+
+
+
+         <br />
         <br />
           <h4 class="ui horizontal divider header">
         <span style="text-decoration: underline; color: black" class="tab">Sipariş Bilgileri</span>
     </h4>
         <div class="inputBox">
             <span>Miktar</span>
-            <input type="text" class="cvc half" name="Amount">
+            <input type="text" class="amount-input" name="Amount">
         </div>
             <div class="inputBox">
             <span>Sipariş No</span>
-            <input type="text" class="cvc half" name="OrderId">
+            <input type="text" class="siparis-no-input" name="OrderId">
         </div>
-                <br />
+        <br />
+
+
 
 
         <input type="submit" value="submit" class="submit-btn" name="paymentButton">
@@ -145,40 +144,144 @@
     
 
 
+@section Scripts {
+
+<script src="~/lib/semantic/semantic.min.js"></script>
+<script src="~/js/card-js.min.js"></script>
+
+<script type="text/javascript">
+
+        var posDatas = [];
+
+        $(document).ready(function () {
+            sixDigitLastValue = 0;
+            previousRecurring = false;
+
+            $("#CardNumber").on("propertychange change keyup paste input", function () {
+                checkBinCode();
+            });
+
+            $('#recurringPayment').click(function () {
+                if ($(this).is(':checked')) {
+                    $("#recurringArea").show();
+                } else {
+                    $("#recurringArea").hide();
+                }
+
+                checkBinCode();
+            });
+
+            $('#payment-form').submit(function (e) {
+                if ($("input[name='Installment']:checked").length > 0) {
+                    var radioValue = $("input[name='Installment']:checked").val();
+                    if (!radioValue) {
+
+                        alert("Please select installment");
+                        e.preventDefault();
+                        return;
+                    }
+
+                    var selectedPostData = posDatas.find(l => l.installments_number == radioValue);
+
+                    if (!selectedPostData) {
+                        alert("Please select installment");
+                        e.preventDefault();
+                        return;
+                    }
+
+                    $("input[name='SelectedPosData']").val(JSON.stringify(selectedPostData));
+                }
+            });
+
+            function checkBinCode() {
+                cardNumberValue = $("#CardNumber").val().replace(/\s+/g, '');
+                isRecurring = $('#recurringPayment').is(':checked');
+
+                if (cardNumberValue.length >= 6) {
+                    if (cardNumberValue.substring(0, 6) != sixDigitLastValue || previousRecurring != isRecurring) {
+
+                        sixDigitLastValue = cardNumberValue;
+                        previousRecurring = isRecurring;
+
+                        var postUrl = "/Checkout/CheckBinCode";
+                        var amount = $("input[name='Amount']").val();
+                        if (!amount) { alert("Sipariş Miktarı Giriniz"); return; }
+
+                        $.ajax({
+                            cache: false,
+                            type: "GET",
+                            url: postUrl,
+                            data: {
+                                "binCode": cardNumberValue,
+                                "amount": amount,
+                                "isRecurring": isRecurring
+                            },
+                            success: function (res) {
+                                fillInstalmentTable(res.posResponse.data);
+                                $("input[name='Is3D']").val(res.is_3d);
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+
+                            }
+                        });
+                    }
+                }
+            }
+
+            function fillInstalmentTable(datas) {
+                posDatas = datas;
+                $("table tbody tr").remove();
+                posDatas.forEach(l => {
+                    var markup = `<tr data-id='${l.installments_number}'>
+                                            <td align="center"> <input type="radio" name="Installment" value="${l.installments_number}"/>${l.installments_number}</td>
+                                            <td align="center">${l.amount_to_be_paid}</td>
+                                          </tr>`;
+                    $("table tbody").append(markup)
+                });
+
+                $('input[type=radio][name="Installment"]').first().prop('checked', true)
+
+            }
+        });
+</script>
+
+}
+
 
 
 
 <script>
 
-document.querySelector('.card-number my-custom-class').oninput = () =>{
-    document.querySelector('.card-number-input').innerText = document.querySelector('.card-number my-custom-class').value;
+document.querySelector('.card-number-input').oninput = () =>{
+    document.querySelector('.card-number-box').innerText = document.querySelector('.card-number-input').value;
 }
 
-document.querySelector('.name').oninput = () =>{
-    document.querySelector('.card-holder-name').innerText = document.querySelector('.name').value;
+document.querySelector('.card-holder-input').oninput = () =>{
+    document.querySelector('.card-holder-name').innerText = document.querySelector('.card-holder-input').value;
 }
 
-document.querySelector('.expiry-month').oninput = () =>{
-    document.querySelector('.exp-month').innerText = document.querySelector('.expiry-month').value;
+document.querySelector('.month-input').oninput = () =>{
+    document.querySelector('.exp-month').innerText = document.querySelector('.month-input').value;
 }
 
-document.querySelector('.expiry-year').oninput = () =>{
-    document.querySelector('.exp-year').innerText = document.querySelector('.expiry-year').value;
+document.querySelector('.year-input').oninput = () =>{
+    document.querySelector('.exp-year').innerText = document.querySelector('.year-input').value;
 }
 
-document.querySelector('.cvc').onmouseenter = () =>{
+document.querySelector('.cvv-input').onmouseenter = () =>{
     document.querySelector('.front').style.transform = 'perspective(1000px) rotateY(-180deg)';
     document.querySelector('.back').style.transform = 'perspective(1000px) rotateY(0deg)';
 }
 
-document.querySelector('.cvc').onmouseleave = () =>{
+document.querySelector('.cvv-input').onmouseleave = () =>{
     document.querySelector('.front').style.transform = 'perspective(1000px) rotateY(0deg)';
     document.querySelector('.back').style.transform = 'perspective(1000px) rotateY(180deg)';
 }
 
-document.querySelector('.cvv').oninput = () =>{
-    document.querySelector('.cvv-box').innerText = document.querySelector('.cvv').value;
+document.querySelector('.cvv-input').oninput = () =>{
+    document.querySelector('.cvv-box').innerText = document.querySelector('.cvv-input').value;
 }
 
 </script>
+
 
