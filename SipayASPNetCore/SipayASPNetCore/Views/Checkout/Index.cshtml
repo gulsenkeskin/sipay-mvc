@@ -187,6 +187,18 @@
             sixDigitLastValue = 0;
             previousRecurring = false;
 
+            //$('#paymentButton').attr('disabled', 'disabled');
+
+            //$('input[type=text]').on('input', function() {
+            //    if ($(this).val() !== null ||$(this).val() !=="" ) {
+            //        $('#paymentButton').removeAttr("disabled");
+            //    }
+            //    else {
+            //        $('#paymentButton').attr('disabled', 'disabled');
+            //    }
+            //});
+
+
             $("#CardNumber").on("propertychange change keyup paste input", function() {
                 checkBinCode();
             });
@@ -235,7 +247,7 @@
 
                         var postUrl = "/Checkout/CheckBinCode";
                         var amount = $("input[name='Amount']").val();
-                        //if (!amount) { alert("Sipariş Miktarı Giriniz"); return; }
+                        //if (!amount) { alert("Sipariş Miktarını Giriniz"); return; }
 
                         $.ajax({
                             cache: false,
@@ -263,9 +275,9 @@
                 $("table tbody tr").remove();
                 posDatas.forEach(l => {
                     var markup = `<tr data-id='${l.installments_number}'>
-                                                    <td align="center"> <input type="radio" name="Installment" value="${l.installments_number}"/>${l.installments_number}</td>
-                                                    <td align="center">${l.amount_to_be_paid}</td>
-                                                  </tr>`;
+                                                                    <td align="center"> <input type="radio" name="Installment" value="${l.installments_number}"/>${l.installments_number}</td>
+                                                                    <td align="center">${l.amount_to_be_paid}</td>
+                                                                  </tr>`;
                     $("table tbody").append(markup)
                 });
 
@@ -311,6 +323,12 @@
         document.querySelector('.cvv-input').oninput = () => {
             document.querySelector('.cvv-box').innerText = document.querySelector('.cvv-input').value;
         }
+
+
+        //document.getElementsByName('Amount').addEventListener('input', function(event) {
+        //    document.getElementsByName('paymentButton').disabled = !this.value;
+        //}, false);
+
 
     </script>
 
