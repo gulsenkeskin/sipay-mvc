@@ -187,18 +187,6 @@
             sixDigitLastValue = 0;
             previousRecurring = false;
 
-            //$('#paymentButton').attr('disabled', 'disabled');
-
-            //$('input[type=text]').on('input', function() {
-            //    if ($(this).val() !== null ||$(this).val() !=="" ) {
-            //        $('#paymentButton').removeAttr("disabled");
-            //    }
-            //    else {
-            //        $('#paymentButton').attr('disabled', 'disabled');
-            //    }
-            //});
-
-
             $("#CardNumber").on("propertychange change keyup paste input", function() {
                 checkBinCode();
             });
@@ -323,11 +311,6 @@
         document.querySelector('.cvv-input').oninput = () => {
             document.querySelector('.cvv-box').innerText = document.querySelector('.cvv-input').value;
         }
-
-
-        //document.getElementsByName('Amount').addEventListener('input', function(event) {
-        //    document.getElementsByName('paymentButton').disabled = !this.value;
-        //}, false);
 
 
     </script>
