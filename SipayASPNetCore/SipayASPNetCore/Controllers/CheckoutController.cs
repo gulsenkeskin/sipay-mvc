@@ -9,6 +9,7 @@ using SipayASPNetCore.Requests;
 using SipayASPNetCore.Responses;
 using SipayASPNetCore.Services;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -189,11 +190,16 @@ namespace SipayASPNetCore.Controllers
                 posRequest.CreditCardNo = binCode;
                 posRequest.Amount = amount;
                 posRequest.CurrencyCode = "TRY";
-                //posRequest.CurrencyCode = "EUR";
-
                 posRequest.IsRecurring = isRecurring;
 
                 SipayGetPosResponse posResponse = SipayPaymentService.GetPos(posRequest, settings, GetAuthorizationToken(settings).Data.token);
+
+
+                //var data = posResponse.Data[0];
+
+                //SipayGetPosResponse newPosResponse = new SipayGetPosResponse();
+                //newPosResponse.Data.Add(data);
+                //posResponse.Data = newPosResponse.Data;
 
                 //GEÇİCİ
 
