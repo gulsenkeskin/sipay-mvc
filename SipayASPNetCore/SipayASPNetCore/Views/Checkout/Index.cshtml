@@ -22,7 +22,7 @@
     <form asp-controller="Checkout" asp-action="Index" id="payment-form" name="form">
         <br />
         <input type="hidden" name="Is3D" />
-        <h4 style="color: black;">Sipariş Bilgileri</h4>
+      @*  <h4 style="color: black;">Sipariş Bilgileri</h4>
         <div class="flexbox">
 
             <div class="inputBox">
@@ -36,7 +36,7 @@
         </div>
         <br />
         <hr class="solid">
-        <br />
+        <br />*@
 
         <div class="card-container">
             <div class="front">
@@ -134,13 +134,13 @@
             </div>
 
         </div>
-
+@*
         <br />
         <hr class="solid">
-        <br />
+        <br />*@
 
 
-        <h4><a href="javascript:return false;" style="color: black" class="tab" id="installment-link">Taksit Seçenekleri</a></h4>
+        @*<h4><a href="javascript:return false;" style="color: black" class="tab" id="installment-link">Taksit Seçenekleri</a></h4>
         <br />
 
         <div id="installmentTable" class="installmentTable">
@@ -162,9 +162,9 @@
                 </tbody>
             </table>
 
-            <input type="hidden" name="SelectedPosData" />
         </div>
-        <br />
+        <br />*@
+                    <input type="hidden" name="SelectedPosData" />
 
         <input type="submit" value="ödemeyi tamamla" class="submit-btn" name="paymentButton">
 
@@ -191,41 +191,46 @@
                 checkBinCode();
             });
 
-            $('#recurringPayment').click(function() {
-                if ($(this).is(':checked')) {
-                    $("#recurringArea").show();
-                } else {
-                    $("#recurringArea").hide();
-                }
+            //$('#recurringPayment').click(function() {
+            //    if ($(this).is(':checked')) {
+            //        $("#recurringArea").show();
+            //    } else {
+            //        $("#recurringArea").hide();
+            //    }
 
-                checkBinCode();
-            });
+            //    checkBinCode();
+            //});
 
             $('#payment-form').submit(function(e) {
-                if ($("input[name='Installment']:checked").length > 0) {
-                    var radioValue = $("input[name='Installment']:checked").val();
-                    if (!radioValue) {
+                //if ($("input[name='Installment']:checked").length > 0) {
 
-                        alert("Please select installment");
-                        e.preventDefault();
-                        return;
-                    }
+                    //var radioValue = $("input[name='Installment']:checked").val();
+                    var radioValue=1;
+
+                    //if (!radioValue) {
+
+                    //    alert("Please select installment");
+                    //    e.preventDefault();
+                    //    return;
+                    //}
 
                     var selectedPostData = posDatas.find(l => l.installments_number == radioValue);
 
                     if (!selectedPostData) {
+
                         alert("Please select installment");
                         e.preventDefault();
                         return;
                     }
 
                     $("input[name='SelectedPosData']").val(JSON.stringify(selectedPostData));
-                }
+                //}
             });
 
             function checkBinCode() {
                 cardNumberValue = $("#CardNumber").val().replace(/\s+/g, '');
-                isRecurring = $('#recurringPayment').is(':checked');
+                isRecurring = false;
+                //isRecurring = $('#recurringPayment').is(':checked');
 
                 if (cardNumberValue.length >= 6) {
                     if (cardNumberValue.substring(0, 6) != sixDigitLastValue || previousRecurring != isRecurring) {
@@ -234,7 +239,8 @@
                         previousRecurring = isRecurring;
 
                         var postUrl = "/Checkout/CheckBinCode";
-                        var amount = $("input[name='Amount']").val();
+                        var amount = 1;
+                        //var amount = $("input[name='Amount']").val();
                         //if (!amount) { alert("Sipariş Miktarını Giriniz"); return; }
 
                         $.ajax({
@@ -247,7 +253,7 @@
                                 "isRecurring": isRecurring
                             },
                             success: function(res) {
-                                fillInstalmentTable(res.posResponse.data);
+                               fillInstalmentTable(res.posResponse.data);
                                 $("input[name='Is3D']").val(res.is_3d);
                             },
                             error: function(xhr, ajaxOptions, thrownError) {
@@ -257,6 +263,8 @@
                     }
                 }
             }
+     
+
 
             function fillInstalmentTable(datas) {
                 posDatas = datas;
