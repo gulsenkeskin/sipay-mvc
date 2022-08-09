@@ -195,18 +195,9 @@ namespace SipayASPNetCore.Controllers
                 SipayGetPosResponse posResponse = SipayPaymentService.GetPos(posRequest, settings, GetAuthorizationToken(settings).Data.token);
 
 
-                //var data = posResponse.Data[0];
-
-                //SipayGetPosResponse newPosResponse = new SipayGetPosResponse();
-                //newPosResponse.Data.Add(data);
-                //posResponse.Data = newPosResponse.Data;
-
-                //GEÇİCİ
-
-                for (int i = 0; i < posResponse.Data.Count; i++)
-                {
-                    posResponse.Data[i].amount_to_be_paid = posResponse.Data[i].amount_to_be_paid + (i * 0.1M);
-                }
+                var data = posResponse.Data[0];
+                posResponse.Data.Clear();
+                posResponse.Data.Add(data); 
 
                 return Ok(new { posResponse = posResponse, is_3d = GetAuthorizationToken(settings).Data.is_3d });
 
