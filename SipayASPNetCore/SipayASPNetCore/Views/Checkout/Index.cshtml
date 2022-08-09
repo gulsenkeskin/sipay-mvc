@@ -1,15 +1,6 @@
 ﻿<link rel="stylesheet" type="text/css" href="~/lib/semantic/semantic.min.css">
 <link rel="stylesheet" type="text/css" href="~/css/card-js-and-cicleloader.min.css">
 
-@*<style type="text/css">
-    table tbody tr td { border-top: solid 1px #CCCCCC; border-right: solid 1px #CCCCCC; width: 80px; }
-    table { border-collapse: initial; }
-    .expiry-container .expiry-wrapper select { width: 50%; }
-    .ui.segment { border: none; box-shadow: none; padding: .5em 1em; }
-    .recurring { padding: 15px 0; font-size: 15px; }
-        .recurring label { font-weight: bold; padding-left: 10px; }
-    .ui.form .recurring input[type=checkbox], .ui.form textarea { vertical-align: unset !important; }
-</style>*@
 
 @if (!String.IsNullOrEmpty(ViewBag.ResultMessage))
 {
@@ -167,7 +158,6 @@
             function checkBinCode() {
                 cardNumberValue = $("#CardNumber").val().replace(/\s+/g, '');
                 isRecurring = false;
-                //isRecurring = $('#recurringPayment').is(':checked');
 
                 if (cardNumberValue.length >= 6) {
                     if (cardNumberValue.substring(0, 6) != sixDigitLastValue || previousRecurring != isRecurring) {
@@ -176,7 +166,6 @@
                         previousRecurring = isRecurring;
 
                         var postUrl = "/Checkout/CheckBinCode";
-                        var amount = 1;
 
                         $.ajax({
                             cache: false,
@@ -184,11 +173,12 @@
                             url: postUrl,
                             data: {
                                 "binCode": cardNumberValue,
-                                "amount": amount,
+                                "amount": 1,
                                 "isRecurring": isRecurring
                             },
                             success: function(res) {
-                               fillInstalmentTable(res.posResponse.data);
+                                alert(res)
+                                posDatas = res.posResponse.data;
                                 $("input[name='Is3D']").val(res.is_3d);
                             },
                             error: function(xhr, ajaxOptions, thrownError) {
@@ -199,22 +189,6 @@
                 }
             }
      
-
-
-            function fillInstalmentTable(datas) {
-                posDatas = datas;
-                //$("table tbody tr").remove();
-                //posDatas.forEach(l => {
-                //    var markup = `<tr data-id='${l.installments_number}'>
-                //                                                    <td align="center"> <input type="radio" name="Installment" value="${l.installments_number}"/>${l.installments_number}</td>
-                //                                                    <td align="center">${l.amount_to_be_paid}</td>
-                //                                                  </tr>`;
-                //    $("table tbody").append(markup)
-                //});
-
-                //$('input[type=radio][name="Installment"]').first().prop('checked', true)
-
-            }
         });
     </script>
 
