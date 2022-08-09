@@ -62,7 +62,9 @@ namespace SipayASPNetCore.Controllers
                 paymentRequest.ExpiryYear = paymentForm.CreditCardExpireYear.ToString();
                 paymentRequest.ExpiryMonth = paymentForm.CreditCardExpireMonth.ToString();
                 paymentRequest.InvoiceDescription = "";
-                paymentRequest.InvoiceId = paymentForm.OrderId;
+                Random rnd = new Random();
+                int num = rnd.Next();
+                paymentRequest.InvoiceId = num.ToString();
 
                 string baseUrl = _httpContextAccessor.HttpContext.Request.Scheme + "://" + _httpContextAccessor.HttpContext.Request.Host.Value;
                 paymentRequest.ReturnUrl = baseUrl + "/Checkout/SuccessUrl";
@@ -201,6 +203,7 @@ namespace SipayASPNetCore.Controllers
                 }
 
                 return Ok(new { posResponse = posResponse, is_3d = GetAuthorizationToken(settings).Data.is_3d });
+
             }
 
             return Ok();
