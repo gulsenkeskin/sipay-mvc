@@ -22,21 +22,6 @@
     <form asp-controller="Checkout" asp-action="Index" id="payment-form" name="form">
         <br />
         <input type="hidden" name="Is3D" />
-      @*  <h4 style="color: black;">Sipariş Bilgileri</h4>
-        <div class="flexbox">
-
-            <div class="inputBox">
-                <span>Miktar</span>
-                <input type="text" class="amount-input" name="Amount">
-            </div>
-            <div class="inputBox">
-                <span>Sipariş No</span>
-                <input type="text" class="siparis-no-input" name="OrderId">
-            </div>
-        </div>
-        <br />
-        <hr class="solid">
-        <br />*@
 
         <div class="card-container">
             <div class="front">
@@ -134,37 +119,9 @@
             </div>
 
         </div>
-@*
-        <br />
-        <hr class="solid">
-        <br />*@
 
-
-        @*<h4><a href="javascript:return false;" style="color: black" class="tab" id="installment-link">Taksit Seçenekleri</a></h4>
-        <br />
-
-        <div id="installmentTable" class="installmentTable">
-            <table cellpadding="0" cellspacing="0" style="border: solid 1px #CCCCCC; width:100%">
-                <thead>
-                    <tr>
-                        <td align="center" style="border-top: solid 1px #CCCCCC;border-right: solid 1px #CCCCCC; width:50%;height:28px; ">
-                            <span style="padding:3px;font-weight: bold;color: black; ">Taksit Sayısı</span>
-                        </td>
-
-                        <td align="center" style="border-top: solid 1px #CCCCCC;  height:28px;  width:50%">
-                            <span style="padding:3px;font-weight: bold;color: black;">Toplam</span>
-                        </td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    </tr>
-                </tbody>
-            </table>
-
-        </div>
-        <br />*@
-                    <input type="hidden" name="SelectedPosData" />
+        
+        <input type="hidden" name="SelectedPosData" />
 
         <input type="submit" value="ödemeyi tamamla" class="submit-btn" name="paymentButton">
 
@@ -191,28 +148,9 @@
                 checkBinCode();
             });
 
-            //$('#recurringPayment').click(function() {
-            //    if ($(this).is(':checked')) {
-            //        $("#recurringArea").show();
-            //    } else {
-            //        $("#recurringArea").hide();
-            //    }
-
-            //    checkBinCode();
-            //});
-
             $('#payment-form').submit(function(e) {
-                //if ($("input[name='Installment']:checked").length > 0) {
 
-                    //var radioValue = $("input[name='Installment']:checked").val();
                     var radioValue=1;
-
-                    //if (!radioValue) {
-
-                    //    alert("Please select installment");
-                    //    e.preventDefault();
-                    //    return;
-                    //}
 
                     var selectedPostData = posDatas.find(l => l.installments_number == radioValue);
 
@@ -224,7 +162,6 @@
                     }
 
                     $("input[name='SelectedPosData']").val(JSON.stringify(selectedPostData));
-                //}
             });
 
             function checkBinCode() {
@@ -240,8 +177,6 @@
 
                         var postUrl = "/Checkout/CheckBinCode";
                         var amount = 1;
-                        //var amount = $("input[name='Amount']").val();
-                        //if (!amount) { alert("Sipariş Miktarını Giriniz"); return; }
 
                         $.ajax({
                             cache: false,
@@ -268,16 +203,16 @@
 
             function fillInstalmentTable(datas) {
                 posDatas = datas;
-                $("table tbody tr").remove();
-                posDatas.forEach(l => {
-                    var markup = `<tr data-id='${l.installments_number}'>
-                                                                    <td align="center"> <input type="radio" name="Installment" value="${l.installments_number}"/>${l.installments_number}</td>
-                                                                    <td align="center">${l.amount_to_be_paid}</td>
-                                                                  </tr>`;
-                    $("table tbody").append(markup)
-                });
+                //$("table tbody tr").remove();
+                //posDatas.forEach(l => {
+                //    var markup = `<tr data-id='${l.installments_number}'>
+                //                                                    <td align="center"> <input type="radio" name="Installment" value="${l.installments_number}"/>${l.installments_number}</td>
+                //                                                    <td align="center">${l.amount_to_be_paid}</td>
+                //                                                  </tr>`;
+                //    $("table tbody").append(markup)
+                //});
 
-                $('input[type=radio][name="Installment"]').first().prop('checked', true)
+                //$('input[type=radio][name="Installment"]').first().prop('checked', true)
 
             }
         });
