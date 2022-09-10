@@ -26,7 +26,7 @@ namespace SipayASPNetCore.Models
 
         public string CreditCardCvv2 { get; set; }
 
-        public string PurchaseOrderNumber { get; set; }
+        public string PurchaseOrderNumber { get; set; } //satınalma sipariş numarası
 
         public int InstallmentNumber { get; set; }
 

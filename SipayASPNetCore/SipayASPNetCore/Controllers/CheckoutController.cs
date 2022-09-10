@@ -49,13 +49,18 @@ namespace SipayASPNetCore.Controllers
             product.Description = "";
             product.Name = "Test Product";
             product.Quantity = 1;
-            product.Price = paymentForm.Amount;
+            product.Price = 1;
 
           if (paymentForm.Is3D == PaymentType.WhiteLabel3D || paymentForm.Is3D == PaymentType.WhiteLabel2DOr3D)
             {
                 //// 3D
 
                 Sipay3DPaymentRequest paymentRequest = new Sipay3DPaymentRequest(settings, paymentForm.SelectedPosData);
+
+
+                string baseUrl = _httpContextAccessor.HttpContext.Request.Scheme + "://" + _httpContextAccessor.HttpContext.Request.Host.Value;
+                paymentRequest.ReturnUrl = baseUrl + "/Checkout/SuccessUrl";
+                paymentRequest.CancelUrl = baseUrl + "/Checkout/CancelUrl";
 
                 paymentRequest.CCNo = paymentForm.CreditCardNumber.Replace(" ", "");
                 paymentRequest.CCHolderName = paymentForm.CreditCardName;
@@ -66,11 +71,6 @@ namespace SipayASPNetCore.Controllers
                 Random rnd = new Random();
                 int num = rnd.Next();
                 paymentRequest.InvoiceId = num.ToString();
-
-                string baseUrl = _httpContextAccessor.HttpContext.Request.Scheme + "://" + _httpContextAccessor.HttpContext.Request.Host.Value;
-                paymentRequest.ReturnUrl = baseUrl + "/Checkout/SuccessUrl";
-                paymentRequest.CancelUrl = baseUrl + "/Checkout/CancelUrl";
-
                 paymentRequest.Items.Add(product);
 
                 if (recurring.Item1)
@@ -174,7 +174,7 @@ namespace SipayASPNetCore.Controllers
             return paymentInfo;
         }
 
-        public ActionResult CheckBinCode(string binCode, decimal amount, bool isRecurring)
+        public ActionResult CheckBinCode(string binCode)
         {
             if (binCode.Length >= 6)
             {
@@ -188,9 +188,9 @@ namespace SipayASPNetCore.Controllers
                 SipayGetPosRequest posRequest = new SipayGetPosRequest();
 
                 posRequest.CreditCardNo = binCode;
-                posRequest.Amount = amount;
+                posRequest.Amount = 1;
                 posRequest.CurrencyCode = "TRY";
-                posRequest.IsRecurring = isRecurring;
+                posRequest.IsRecurring = false;
 
                 SipayGetPosResponse posResponse = SipayPaymentService.GetPos(posRequest, settings, GetAuthorizationToken(settings).Data.token);
 

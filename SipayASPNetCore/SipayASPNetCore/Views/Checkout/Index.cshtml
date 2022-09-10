@@ -173,8 +173,6 @@
                             url: postUrl,
                             data: {
                                 "binCode": cardNumberValue,
-                                "amount": 1,
-                                "isRecurring": isRecurring
                             },
                             success: function(res) {
                                 posDatas = res.posResponse.data;
@@ -190,7 +188,6 @@
      
         });
     </script>
-
 }
 
 
